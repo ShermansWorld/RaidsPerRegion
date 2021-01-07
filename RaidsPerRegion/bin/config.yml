@@ -59,19 +59,19 @@ RaidCancelledSubtitle: "&6Raid Cancelled by @SENDER"
 # This should be your most common one and should not make much of a difference
 
 RaidMobs:
-  AngrySludge:
+  SkeletalMinion:
     Chance: 0.60
     Priority: 1
   StaticallyChargedSheep:
     Chance: 0.35
     Priority: 2
-  SkeletalMinion:
+  SkeletalKnight:
     Chance: 0.20
     Priority: 3
-  SkeletalKnight:
+  SkeletalKing:
     Chance: 0.15
     Priority: 4
-  SkeletalKing:
+  AngrySludge:
     Chance: 0.05
     Priority: 5
 
