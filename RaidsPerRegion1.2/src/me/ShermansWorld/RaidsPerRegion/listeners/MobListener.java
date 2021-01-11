@@ -11,7 +11,7 @@ import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import me.ShermansWorld.RaidsPerRegion.commands.RaidCommands;
 import net.md_5.bungee.api.ChatColor;
 
-public final class Listeners implements Listener {
+public final class MobListener implements Listener {
 	
 	@EventHandler
 	public void onMythicMobDead(MythicMobDeathEvent event) {

@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.ShermansWorld.RaidsPerRegion.commands.RaidCommands;
 import me.ShermansWorld.RaidsPerRegion.commands.RaidsPerRegionCommands;
-import me.ShermansWorld.RaidsPerRegion.listeners.Listeners;
+import me.ShermansWorld.RaidsPerRegion.listeners.MobListener;
 import me.ShermansWorld.RaidsPerRegion.tabCompletion.RaidTabCompletion;
 import me.ShermansWorld.RaidsPerRegion.tabCompletion.RaidsPerRegionTabCompletion;
 
@@ -16,7 +16,7 @@ public class Main extends JavaPlugin {
 	public void onEnable() { //What runs when you start server
 		
 		this.saveDefaultConfig();
-		getServer().getPluginManager().registerEvents(new Listeners(), this);
+		getServer().getPluginManager().registerEvents(new MobListener(), this);
 		//this.getConfig().options().copyDefaults(false);
 		
 		//initialize commands
