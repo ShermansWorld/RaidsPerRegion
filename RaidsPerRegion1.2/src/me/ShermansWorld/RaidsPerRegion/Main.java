@@ -2,9 +2,9 @@ package me.ShermansWorld.RaidsPerRegion;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.ShermansWorld.RaidsPerRegion.commands.Listeners;
 import me.ShermansWorld.RaidsPerRegion.commands.RaidCommands;
 import me.ShermansWorld.RaidsPerRegion.commands.RaidsPerRegionCommands;
+import me.ShermansWorld.RaidsPerRegion.listeners.Listeners;
 import me.ShermansWorld.RaidsPerRegion.tabCompletion.RaidTabCompletion;
 import me.ShermansWorld.RaidsPerRegion.tabCompletion.RaidsPerRegionTabCompletion;
 

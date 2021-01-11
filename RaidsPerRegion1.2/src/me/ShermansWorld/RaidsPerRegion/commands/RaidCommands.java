@@ -85,10 +85,9 @@ public class RaidCommands implements CommandExecutor {
 		plugin.getCommand("raid").setExecutor((CommandExecutor) this); // command to run in chat
 	}
 
-	// Player that sends command
-	// Command it sends
-	// Alias of the command which was used
-	// args for Other values within command
+///////////////////////////////////////////////////////CUSTOM METHODS////////////////////////////////////////////////////////////////////////////////
+	
+	//spawnMobs Method
 	private static void spawnMobs(Random rand, List<Location> regionPlayerLocations, int scoreCounter, MobManager mm,
 			List<String> mMMobNames, List<Double> chances, List<Integer> priorities, int maxMobsPerPlayer,
 			double mobLevel, Scoreboard board, Objective objective) {
@@ -159,6 +158,7 @@ public class RaidCommands implements CommandExecutor {
 		}
 	}
 
+	//checkPlayersInTown Method
 	public static void checkPlayersInTown(Scoreboard board, Objective objective, MobManager mm, List<String> mMMobNames,
 			List<Double> chances, List<Integer> priorities, int maxMobsPerPlayer, long conversionSpawnRateMultiplier,
 			double mobLevel) {
@@ -221,6 +221,7 @@ public class RaidCommands implements CommandExecutor {
 		}, 0L, 20L / conversionSpawnRateMultiplier);
 	}
 
+	//checkPlayersInRegion Method
 	public static void checkPlayersInRegion(Scoreboard board, Objective objective, MobManager mm,
 			List<String> mMMobNames, List<Double> chances, List<Integer> priorities, int maxMobsPerPlayer,
 			long conversionSpawnRateMultiplier, double mobLevel) {
@@ -280,6 +281,7 @@ public class RaidCommands implements CommandExecutor {
 		}, 0L, 20L / conversionSpawnRateMultiplier);
 	}
 
+	//getMobsFromConfig Method
 	private void getMobsFromConfig() {
 		Set<String> mmMobs = this.plugin.getConfig().getConfigurationSection("RaidMobs").getKeys(false); // only gets
 																											// top keys
@@ -299,6 +301,7 @@ public class RaidCommands implements CommandExecutor {
 		}
 	}
 
+	//isCancelledRaid Method
 	private boolean isCancelledRaid(String tier, Player p) {
 		if (Main.cancelledRaid) {
 			Title title = new Title();
@@ -347,6 +350,7 @@ public class RaidCommands implements CommandExecutor {
 		}
 	}
 
+	//isWonRaid Method
 	private boolean isWonRaid(String tier, Player p, int goal, String boss, MobManager mm, double mobLevel) {
 		if (totalKills >= goal) {
 			if (boss.equalsIgnoreCase("NONE")) {
@@ -427,6 +431,7 @@ public class RaidCommands implements CommandExecutor {
 		return false;
 	}
 
+	//isLostRaid Method
 	private boolean isLostRaid(String tier, Player p, int goal, int minutes) {
 		if (countdown == 0 && minutes == 0) {
 			Title title = new Title();
@@ -475,6 +480,7 @@ public class RaidCommands implements CommandExecutor {
 		}
 	}
 
+	//resetVariables Method
 	private void resetVariables() {
 		timeReached = false;
 		totalKills = 0;
@@ -494,6 +500,12 @@ public class RaidCommands implements CommandExecutor {
 		bossSpawned = false;
 	}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// Player that sends command
+	// Command it sends
+	// Alias of the command which was used
+	// args for Other values within command
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
 		Player p = (Player) sender; // Convert sender into player
