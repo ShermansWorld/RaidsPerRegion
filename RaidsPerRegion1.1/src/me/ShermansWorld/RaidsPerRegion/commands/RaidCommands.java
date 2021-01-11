@@ -47,7 +47,7 @@ import io.lumine.xikage.mythicmobs.mobs.MobManager;
 
 public class RaidCommands implements CommandExecutor {
 
-	private static Main plugin;
+	public static Main plugin;
 
 	// private class variables
 	private static boolean timeReached = false;
