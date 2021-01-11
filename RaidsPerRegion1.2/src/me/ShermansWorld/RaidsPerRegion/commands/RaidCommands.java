@@ -518,6 +518,8 @@ public class RaidCommands implements CommandExecutor {
 		long conversionSpawnRateMultiplier = 10;
 
 		// Check arguments
+		
+		
 		// --------------------------------------------------------------------------------------------------------------
 
 		if (!p.hasPermission("raidsperregion.raid")) {
@@ -575,6 +577,7 @@ public class RaidCommands implements CommandExecutor {
 				return false;
 			}
 		}
+
 
 		if (args[0].equalsIgnoreCase("region")) {
 			com.sk89q.worldedit.world.World bukkitWorld = BukkitAdapter.adapt(w);
