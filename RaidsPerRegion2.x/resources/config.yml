@@ -1,0 +1,157 @@
+# NOTES ON OPEN SOURCE:
+# This plugin is an open source project developed by ShermansWorld and KristOJa
+# This source code can be found here: https://github.com/ShermansWorld/RaidsPerRegion/
+# Feel free to change the code to fit your needs, we just ask that you credit and link the original source code
+
+# NOTES ON PLUGIN/CONFIG:
+config-version: 6
+# RaidsPerRegion is a server event plugin that allows you to conduct a raid on a predefined WorldGuard region
+# Players within the region have to kill a set amount of your custom MythicMobs mobs before the timer runs
+# A raid is initiated using /raid [region] [tier], it can be cancelled using /raid cancel
+# RaidsPerRegion is now Towny compatibile! Use /raid town [town] [tier], it can also be cancelled using /raid cancel
+# This plugin requires MythicMobs, WorldGuard and WorldEdit as dependencies. Please make sure these pluings are up to date
+# Make sure no other plugin is disabling mob spawning in the raid area, like Factions for example.
+# You do not need to enable mob spawning in towny or with a region flag, it will be temporaily enabled for the raid
+# This config can be reloaded ingame using /RaidsPerRegion reload
+
+# PERMISSION NODES:
+# raidsperregion.raid - Allows access to all /raid commands
+# raidsperregion.reload - Allows for /raidsperregion reload
+
+# HELP WITH DEPENDENCIES:
+# How to define a WorldGuard Region: https://worldguard.enginehub.org/en/latest/regions/quick-start/
+
+# How to create MythicMobs Mob: https://www.mythicmobs.net/manual/doku.php/start 
+# Or look at exampleMobs.yml in your MythicMobs folder
+
+
+# ------  Title Messages  ---------
+# These are the messages to be displayed to all players within the region during a raid
+# Use "" for none
+
+# Available Placeholders: @TIER @REGION @TOWN @SENDER
+# Note: @REGION and @TOWN will not work at the same time.
+
+RaidAnnoucementTitle: "&4&lTier @TIER Raid Inbound"
+RaidAnnoucementSubtitle: "&6Prepare to fight!" 
+
+RaidWinTitle: "&2&lRaid Won!"
+RaidWinSubtitle: "&6The raiders have fled"
+
+RaidLoseTitle: "&4&lRaid Lost!"
+RaidLoseSubtitle: "&6This can't be good..."
+
+RaidCancelledTitle: "&b&LRaid Cancelled"
+RaidCancelledSubtitle: "&6Raid Cancelled by @SENDER"
+
+# ------  Other Messages  ---------
+# These are the messages to be displayed to all players within the region during a raid
+# Use "" for none
+
+# Available Placeholders: @TIER @REGION @TOWN @BOSSNAME
+# Note: @REGION and @TOWN will not work at the same time.
+
+BossKilledMessage: "&4[Tier @TIER Raid] @BOSSNAME &6was slain by @PLAYER"
+
+# ------  Options  ---------
+# These are additional options
+# SpawnBossOnKillGoalReached: Spawns a mob (Mythic Mob) when the kills goal is reached [See Raid Tiers]
+# Disabling this will stop all bosses from spawning
+# Note: The boss must be killed for the raid to end if this is set to true
+# MobsSpawnOnlyInRegion: mob spawns are restricted to only within the region. Enable this if you are using RaidsPerRegion in closed areas
+# MobsStayOnRaidLoss: Any spawned mobs will remain if the raid is lost. Set this to false to clear the mobs
+
+SpawnBossOnKillGoalReached: true
+MobsSpawnOnlyInRegion: false
+MobsStayOnRaidLoss: true
+
+# ------  Mobs that Spawn in Raids  ---------
+# These are the mobs (Mythic Mobs) types that spawn in a raid.
+# You may edit this section to include as many mobs as you want
+
+# Chance: the chance of spawning in each cycle.
+# 0.60 for example would be 60%. The smallest chance can be 0.001 or 0.1%
+
+# Priority: is the priority of the mob spawning. 
+# If two mobs spawn per the chance parameter the one with the higher priority is spawned. 
+# This means that rare mobs (one with a low chance value) should have a higher priority!
+
+# If no mob is spawned using its chance it defaults to the first mob in the list. 
+# This should be your most common one and should not make much of a difference
+
+RaidMobs:
+  SkeletalMinion:
+    Chance: 0.60
+    Priority: 1
+  StaticallyChargedSheep:
+    Chance: 0.35
+    Priority: 2
+  SkeletalKnight:
+    Chance: 0.15
+    Priority: 3
+  SkeletalKing:
+    Chance: 0.05
+    Priority: 4
+
+
+
+# ------  Raid Tiers  ---------
+# These are the settings for each tier of raid. Right now the plugin supports 3 tiers of raids. They must be named accordingly
+# You will probably need to play around with these settings (especially KillsGoal and Time) to see what works best for your mobs
+
+# KillsGoal: The amount of mobs the players need to kill to win the raid
+# Time: The time (in seconds) the players have to win the raid
+# MaxMobsPerPlayer: The maximum amount of raid mobs that can be alive at any given time
+# SpawnRateMultiplier: How fast the mobs spawn. 
+# MobLevel: The level of the mobs the spawn (increasing damage and health)
+# Boss: The name of the boss (Mythic Mob) that will spawn. Set to NONE for no boss
+# The boss will spawn once the kills goal has been reached. If enabled, players must kill the boss to win the raid
+
+Tier1:
+   KillsGoal: 100
+   Time: 600
+   MaxMobsPerPlayer: 10
+   SpawnRateMultiplier: 1.0
+   MobLevel: 1
+   Boss: NONE
+Tier2:
+   KillsGoal: 300
+   Time: 900
+   MaxMobsPerPlayer: 15
+   SpawnRateMultiplier: 1.5
+   MobLevel: 5
+   Boss: AngrySludge
+Tier3:
+   KillsGoal: 500
+   Time: 1200
+   MaxMobsPerPlayer: 20
+   SpawnRateMultiplier: 2.0
+   MobLevel: 10
+   Boss: AngrySludge
+   
+# ------  Raid Win/Loss Commands  ---------
+# This is for commands that you want to run upon a raid win/loss.
+# Ommit the "/" from the command. An example is given below
+# All commands are run through console.
+# Global will run the command once
+# PerPlayer will run the command for every player that got atleast 1 kill in the raid.
+
+# Available Placeholders: 
+# Global - @REGION, @TOWN, @TIER
+# PerPlayer - @REGION, @TOWN, @TIER, @PLAYER
+# Note: @REGION and @TOWN will not work at the same time.
+
+UseWinLossCommands: true
+
+RaidWinCommands:
+  Global:
+    - "broadcast The tier @TIER raid on @REGION has been won!"
+  PerPlayer:
+    - "eco give @PLAYER 100"
+    - "msg @PLAYER nice job!"
+    
+RaidLoseCommands:
+  Global:
+    - "broadcast The tier @TIER raid on @REGION has been lost!"
+  PerPlayer:
+    - "eco take @PLAYER 50"
