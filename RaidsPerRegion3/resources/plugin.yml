@@ -1,0 +1,18 @@
+name: RaidsPerRegion
+version: 3.0
+api-version: 1.19
+author: ShermansWorld
+main: me.ShermansWorld.raidsperregion.RaidsPerRegion
+depend: [WorldEdit, WorldGuard, MythicMobs]
+softdepend: [Towny]
+
+commands:
+  raid:
+    description: Used to start raids
+    depend: [WorldEdit, WorldGuard, MythicMobs]
+  raidtown:
+    description: Used to start raids
+    depend: [Towny, MythicMobs]
+  raidsperregion:
+    aliases: [rpr]
+    description: Used to cancel raids or reload plugin
