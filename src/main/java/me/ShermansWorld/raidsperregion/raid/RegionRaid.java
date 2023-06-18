@@ -39,12 +39,11 @@ public class RegionRaid extends Raid {
 
 	@Override
 	public void startRaid(CommandSender sender, boolean isConsole) {
-		
 
 		Raids.globalRaidID++;
 		this.setID(Raids.globalRaidID);
 		Raids.activeRegionRaids.add(this);
-		
+
 		// see if mob spawning is allowed in region, and force it on if necessary
 		forceMobsSpawning();
 
@@ -90,10 +89,10 @@ public class RegionRaid extends Raid {
 
 	@Override
 	public void stopRaid() {
-		
+
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
-		
+
 		updateParticipantsTimer.cancel();
 		spawnMobsTimer.cancel();
 		raidTimer.cancel();
@@ -167,7 +166,7 @@ public class RegionRaid extends Raid {
 				return;
 			}
 		}
-		
+
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
 
@@ -204,10 +203,10 @@ public class RegionRaid extends Raid {
 
 	@Override
 	public void onRaidLoss() {
-		
+
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
-		
+
 		// Send title message to anyone who participated
 		for (UUID playerUUID : super.getParticipantsKillsMap().keySet()) {
 			OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
@@ -332,18 +331,17 @@ public class RegionRaid extends Raid {
 				continue;
 			}
 
-			// spawn mob
-			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
-			if (mob == null) {
-				
+			// spawn boss
+			ActiveMob boss = MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z));
+			if (boss == null) {
+				super.setHasBoss(false);
+				if (RaidsPerRegion.isInDebugMode) {
+					Bukkit.broadcastMessage(Helper.color("&4Spawned NULL BOSS! Skipping..."));
+				}
+				return false;
 			}
- 			super.getMobs().add(mob);
-			if (RaidsPerRegion.isInDebugMode) {
-				Bukkit.broadcastMessage(Helper.color("&4Mob " + mob.getName() + " &4has spawned at X: "
-						+ String.valueOf(x) + " Y: " + String.valueOf(y) + " Z: " + String.valueOf(z)));
-			}
-			// spawn the boss
-			super.setBossMob(MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z)));
+			super.setBossMob(boss);
+
 			// Send title message to anyone who participated so far
 			for (UUID participantUUID : super.getParticipantsKillsMap().keySet()) {
 				OfflinePlayer offlineParticipant = Bukkit.getOfflinePlayer(participantUUID);
@@ -443,9 +441,8 @@ public class RegionRaid extends Raid {
 			// spawn mob
 			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
 			if (mob == null) {
-				super.setHasBoss(false);
 				if (RaidsPerRegion.isInDebugMode) {
-					Bukkit.broadcastMessage(Helper.color("NULL BOSS! Skipping..."));
+					Bukkit.broadcastMessage(Helper.color("&cSpawned NULL mob! Skipping..."));
 				}
 				return;
 			}
@@ -507,19 +504,18 @@ public class RegionRaid extends Raid {
 			this.setMobSpawning(true);
 		}
 	}
-	
+
 	@Override
 	public void resetMobsSpawning() {
 		if (this.getMobSpawning() == false) {
 			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.DENY);
 		}
-		
+
 	}
 
 	// Getters and Setters
 	public ProtectedRegion getRegion() {
 		return region;
 	}
-
 
 }

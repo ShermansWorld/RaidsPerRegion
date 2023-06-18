@@ -54,6 +54,9 @@ public class Config {
 	// settings
 	public static boolean preventVanillaMobsSpawningInRaids;
 	public static boolean forceMobSpawningInRaids;
+	public static boolean keepInventoryInRaids;
+	public static boolean keepXPInRaids;
+	public static boolean disablePvPInRaids;
 	public static boolean keepMobsOnRaidLoss;
 	
 	
@@ -104,6 +107,9 @@ public class Config {
 	
 		preventVanillaMobsSpawningInRaids = config.getBoolean("PreventVanillaMobsSpawningInRaids");
 		forceMobSpawningInRaids = config.getBoolean("ForceMobSpawningInRaids");
+		keepInventoryInRaids = config.getBoolean("KeepInventoryInRaids");
+		keepXPInRaids = config.getBoolean("KeepXPInRaids");
+		disablePvPInRaids = config.getBoolean("DisablePvPInRaids");
 		keepMobsOnRaidLoss = config.getBoolean("KeepMobsOnRaidLoss");
 		
 		

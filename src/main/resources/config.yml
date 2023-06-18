@@ -66,4 +66,7 @@ RaidBossSubtitle: "&6Kill @BOSS to win the raid!"
 
 PreventVanillaMobsSpawningInRaids: true
 ForceMobSpawningInRaids: true
+KeepInventoryInRaids: true
+KeepXPInRaids: true
+DisablePvPInRaids: true
 KeepMobsOnRaidLoss: true

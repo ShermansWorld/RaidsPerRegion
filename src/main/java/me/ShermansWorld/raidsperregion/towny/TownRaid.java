@@ -334,15 +334,17 @@ public class TownRaid extends Raid {
 				continue;
 			}
 
-			// spawn mob
-			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
-			super.getMobs().add(mob);
-			if (RaidsPerRegion.isInDebugMode) {
-				Bukkit.broadcastMessage(Helper.color("&4Mob " + mob.getName() + " &4has spawned at X: "
-						+ String.valueOf(x) + " Y: " + String.valueOf(y) + " Z: " + String.valueOf(z)));
+			// spawn boss
+			ActiveMob boss = MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z));
+			if (boss == null) {
+				super.setHasBoss(false);
+				if (RaidsPerRegion.isInDebugMode) {
+					Bukkit.broadcastMessage(Helper.color("&4Spawned NULL BOSS! Skipping..."));
+				}
+				return false;
 			}
-			// spawn the boss
-			super.setBossMob(MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z)));
+			super.setBossMob(boss);
+
 			// Send title message to anyone who participated so far
 			for (UUID participantUUID : super.getParticipantsKillsMap().keySet()) {
 				OfflinePlayer offlineParticipant = Bukkit.getOfflinePlayer(participantUUID);
@@ -362,7 +364,7 @@ public class TownRaid extends Raid {
 
 	@Override
 	public void spawnMobForSpecficParticipant(int distanceFactor, Player player) {
-		
+
 		// If raid mobs already spawned is at the limit, do not spawn
 		if (super.getMobs().size() >= super.getMaxTotalMobs()) {
 			if (RaidsPerRegion.isInDebugMode) {
@@ -491,7 +493,7 @@ public class TownRaid extends Raid {
 		}
 
 	}
-	
+
 	@Override
 	public void forceMobsSpawning() {
 		if (!town.hasMobs()) {
