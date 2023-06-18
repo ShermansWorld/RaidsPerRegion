@@ -1,6 +1,5 @@
 package me.ShermansWorld.raidsperregion.towny;
 
-import java.util.Iterator;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -442,6 +441,13 @@ public class TownRaid extends Raid {
 
 			// spawn mob
 			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
+			if (mob == null) {
+				super.setHasBoss(false);
+				if (RaidsPerRegion.isInDebugMode) {
+					Bukkit.broadcastMessage(Helper.color("NULL BOSS! Skipping..."));
+				}
+				return;
+			}
 			super.getMobs().add(mob);
 			if (RaidsPerRegion.isInDebugMode) {
 				Bukkit.broadcastMessage(Helper.color("&aMob " + mob.getName() + " has spawned at X: "
@@ -462,17 +468,6 @@ public class TownRaid extends Raid {
 		super.cleanStoredMobs();
 
 		super.setTimeLeft(super.getTimeLeft() - 1);
-
-		// iterate through the spawned mobs of the raid
-		Iterator<ActiveMob> i = super.getMobs().iterator();
-		while (i.hasNext()) {
-			ActiveMob mob = i.next();
-			if (mob == null) {
-				// remove mob from set if it is null (happens after mob is dead for an interval,
-				// seems to be part of MythicMobs)
-				i.remove();
-			}
-		}
 
 		// update scoreboard for all participants
 		for (UUID playerUUID : super.getParticipantsKillsMap().keySet()) {

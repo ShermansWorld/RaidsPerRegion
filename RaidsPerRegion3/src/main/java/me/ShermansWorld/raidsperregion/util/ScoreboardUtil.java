@@ -37,7 +37,10 @@ public class ScoreboardUtil {
 	
 	public static void clearScoreboards(Raid raid) {
 		for (UUID uuid : raid.getScoreboards().keySet()) {
-			raid.getScoreboards().get(uuid).delete();
+			try {
+				raid.getScoreboards().get(uuid).delete();
+			} catch(IllegalStateException e) {
+			}
 		}
 	}
 	
