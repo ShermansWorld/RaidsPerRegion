@@ -498,6 +498,10 @@ public class RegionRaid extends Raid {
 	@Override
 	public void forceMobsSpawning() {
 		// check for mob spawning flag in region
+		if (region.getFlag(Flags.MOB_SPAWNING) == null) {
+			this.setMobSpawning(false);
+			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.ALLOW);
+		}
 		if (region.getFlag(Flags.MOB_SPAWNING).equals(StateFlag.State.DENY)) {
 			this.setMobSpawning(false);
 			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.ALLOW);
