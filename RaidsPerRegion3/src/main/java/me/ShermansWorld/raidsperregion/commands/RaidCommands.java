@@ -30,6 +30,11 @@ public class RaidCommands implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (sender instanceof Player) {
 			isConsole = false;
+			Player p = (Player) sender;
+			if (!p.hasPermission("RaidsPerRegion.admin")) {
+				p.sendMessage(Helper.chatLabelError() + "You do not have permission to run this command!");
+				return false;
+			}
 		} else {
 			isConsole = true;
 		}
