@@ -44,7 +44,9 @@ public class RaidTownTabCompleters implements TabCompleter {
 			// Auto-complete regions based on world arg
 			if (args[0].equalsIgnoreCase("start")) {
 				for (Town town : TownyUtil.getTownyAPI().getTowns()) {
-					completions.add(town.getName());
+					if (town.getWorld().getName().equalsIgnoreCase(args[1])) {
+						completions.add(town.getName());
+					}
 				}
 				return emptyListCheck(completions);
 			}

@@ -324,6 +324,10 @@ public abstract class Raid {
 	public boolean hasBoss() {
 		return hasBoss;
 	}
+	
+	public boolean setHasBoss(boolean hasBoss) {
+		return this.hasBoss = hasBoss;
+	}
 
 	public String getBossName() {
 		return bossName;

@@ -1,6 +1,5 @@
 package me.ShermansWorld.raidsperregion.raid;
 
-import java.util.Iterator;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -335,7 +334,10 @@ public class RegionRaid extends Raid {
 
 			// spawn mob
 			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
-			super.getMobs().add(mob);
+			if (mob == null) {
+				
+			}
+ 			super.getMobs().add(mob);
 			if (RaidsPerRegion.isInDebugMode) {
 				Bukkit.broadcastMessage(Helper.color("&4Mob " + mob.getName() + " &4has spawned at X: "
 						+ String.valueOf(x) + " Y: " + String.valueOf(y) + " Z: " + String.valueOf(z)));
@@ -440,6 +442,13 @@ public class RegionRaid extends Raid {
 
 			// spawn mob
 			ActiveMob mob = MythicMobsUtil.spawnRandomMob(new Location(super.getWorld(), x, y, z), super.getMobLevel());
+			if (mob == null) {
+				super.setHasBoss(false);
+				if (RaidsPerRegion.isInDebugMode) {
+					Bukkit.broadcastMessage(Helper.color("NULL BOSS! Skipping..."));
+				}
+				return;
+			}
 			super.getMobs().add(mob);
 			if (RaidsPerRegion.isInDebugMode) {
 				Bukkit.broadcastMessage(Helper.color("&aMob " + mob.getName() + " has spawned at X: "
@@ -460,17 +469,6 @@ public class RegionRaid extends Raid {
 		super.cleanStoredMobs();
 
 		super.setTimeLeft(super.getTimeLeft() - 1);
-
-		// iterate through the spawned mobs of the raid
-		Iterator<ActiveMob> i = super.getMobs().iterator();
-		while (i.hasNext()) {
-			ActiveMob mob = i.next();
-			if (mob == null) {
-				// remove mob from set if it is null (happens after mob is dead for an interval,
-				// seems to be part of MythicMobs)
-				i.remove();
-			}
-		}
 
 		// update scoreboard for all participants
 		for (UUID playerUUID : super.getParticipantsKillsMap().keySet()) {
