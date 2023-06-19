@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
@@ -18,7 +18,7 @@ import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
 public class MobSpawnListener implements Listener {
 
 	@EventHandler
-	public void onMobSpawn(EntitySpawnEvent e) {
+	public void onCreatureSpawn(CreatureSpawnEvent e) {
 		if (!Config.preventVanillaMobsSpawningInRaids) {
 			return;
 		}

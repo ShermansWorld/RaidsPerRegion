@@ -45,7 +45,7 @@ public class RegionRaid extends Raid {
 		Raids.activeRegionRaids.add(this);
 
 		// see if mob spawning is allowed in region, and force it on if necessary
-		forceMobsSpawning();
+		this.forceMobsSpawning();
 
 		if (RaidsPerRegion.isInDebugMode) {
 			String mobList = "Raid Mobs: ";
@@ -91,7 +91,7 @@ public class RegionRaid extends Raid {
 	public void stopRaid() {
 
 		// restore region's mobspawning settings prior to raid
-		resetMobsSpawning();
+		this.resetMobsSpawning();
 
 		updateParticipantsTimer.cancel();
 		spawnMobsTimer.cancel();
@@ -496,6 +496,7 @@ public class RegionRaid extends Raid {
 		if (region.getFlag(Flags.MOB_SPAWNING) == null) {
 			this.setMobSpawning(false);
 			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.ALLOW);
+			return;
 		}
 		if (region.getFlag(Flags.MOB_SPAWNING).equals(StateFlag.State.DENY)) {
 			this.setMobSpawning(false);
