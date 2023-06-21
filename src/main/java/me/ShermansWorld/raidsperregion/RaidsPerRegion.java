@@ -11,11 +11,12 @@ import me.ShermansWorld.raidsperregion.commands.RaidsPerRegionTabCompleters;
 import me.ShermansWorld.raidsperregion.config.Config;
 import me.ShermansWorld.raidsperregion.listeners.MobSpawnListener;
 import me.ShermansWorld.raidsperregion.listeners.PlayerDeathListener;
+import me.ShermansWorld.raidsperregion.listeners.PlayerJoinListener;
 import me.ShermansWorld.raidsperregion.listeners.PvPListener;
 import me.ShermansWorld.raidsperregion.listeners.RaidKillListener;
-import me.ShermansWorld.raidsperregion.towny.RaidTownCommands;
-import me.ShermansWorld.raidsperregion.towny.RaidTownTabCompleters;
 import me.ShermansWorld.raidsperregion.towny.TownyUtil;
+import me.ShermansWorld.raidsperregion.towny.commands.RaidTownCommands;
+import me.ShermansWorld.raidsperregion.towny.commands.RaidTownTabCompleters;
 import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
 
 public class RaidsPerRegion extends JavaPlugin {
@@ -46,6 +47,7 @@ public class RaidsPerRegion extends JavaPlugin {
 		this.pm.registerEvents(new MobSpawnListener(), this);
 		this.pm.registerEvents(new PvPListener(), this);
 		this.pm.registerEvents(new PlayerDeathListener(), this);
+		this.pm.registerEvents(new PlayerJoinListener(), this);
 	}
 
 	private void initHooks() {

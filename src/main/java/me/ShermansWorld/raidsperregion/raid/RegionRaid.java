@@ -159,7 +159,7 @@ public class RegionRaid extends Raid {
 		// check for boss
 		if (super.hasBoss()) {
 			if (!super.isBossSpawned()) {
-				super.setBossSpawned(spawnBoss(0));
+				super.setBossSpawned(spawnBoss(10));
 				return;
 			}
 			if (!super.isBossKilled()) {
@@ -198,6 +198,11 @@ public class RegionRaid extends Raid {
 
 		// clear scoreboard for all players
 		ScoreboardUtil.clearScoreboards(this);
+
+		// run win commands
+		if (Config.useWinLossCommands) {
+			this.runWinCommands();
+		}
 
 	}
 
@@ -238,12 +243,22 @@ public class RegionRaid extends Raid {
 			}
 		}
 
+		// run loss commands
+		if (Config.useWinLossCommands) {
+			this.runLossCommands();
+		}
+
 	}
 
 	@Override
 	public boolean spawnBoss(int distanceFactor) {
 
 		// GET RANDOM PLAYER FROM ACTIVE PARTICIPANTS
+
+		if (this.getActiveParticipants().isEmpty()) {
+			return false;
+		}
+
 		int randIndex = (int) (Math.random() * super.getActiveParticipants().size());
 
 		UUID playerUUID = super.getActiveParticipants().get(randIndex);
@@ -334,7 +349,6 @@ public class RegionRaid extends Raid {
 			// spawn boss
 			ActiveMob boss = MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z));
 			if (boss == null) {
-				super.setHasBoss(false);
 				if (RaidsPerRegion.isInDebugMode) {
 					Bukkit.broadcastMessage(Helper.color("&4Spawned NULL BOSS! Skipping..."));
 				}

@@ -1,4 +1,4 @@
-package me.ShermansWorld.raidsperregion.towny;
+package me.ShermansWorld.raidsperregion.towny.commands;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.object.Town;
 
 import me.ShermansWorld.raidsperregion.raid.Raid;
 import me.ShermansWorld.raidsperregion.raid.Raids;
+import me.ShermansWorld.raidsperregion.towny.TownyUtil;
 
 public class RaidTownTabCompleters implements TabCompleter {
 

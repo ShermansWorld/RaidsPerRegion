@@ -1,4 +1,4 @@
-package me.ShermansWorld.raidsperregion.towny;
+package me.ShermansWorld.raidsperregion.towny.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -14,6 +14,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
 import me.ShermansWorld.raidsperregion.raid.Raid;
 import me.ShermansWorld.raidsperregion.raid.Raids;
+import me.ShermansWorld.raidsperregion.towny.TownRaid;
 import me.ShermansWorld.raidsperregion.util.Helper;
 
 public class RaidTownCommands implements CommandExecutor {

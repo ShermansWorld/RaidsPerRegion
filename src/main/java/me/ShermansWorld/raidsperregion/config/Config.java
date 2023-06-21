@@ -1,5 +1,7 @@
 package me.ShermansWorld.raidsperregion.config;
 
+import java.util.ArrayList;
+
 import org.bukkit.configuration.file.FileConfiguration;
 
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
@@ -7,12 +9,12 @@ import me.ShermansWorld.raidsperregion.raid.RaidMob;
 import me.ShermansWorld.raidsperregion.raid.Raids;
 
 public class Config {
-	
+
 	private static FileConfiguration config;
-	
+
 	// config version
 	public static int configVersion = 1;
-	
+
 	// titles
 	public static String raidStartTitle;
 	public static String raidStartSubtitle;
@@ -24,7 +26,7 @@ public class Config {
 	public static String raidStopSubtitle;
 	public static String raidBossTitle;
 	public static String raidBossSubtitle;
-	
+
 	// tiers
 	public static int tier1MaxMobs;
 	public static int tier1KillsGoal;
@@ -50,23 +52,31 @@ public class Config {
 	public static double tier3MobLevel;
 	public static boolean tier3HasBoss;
 	public static String tier3BossName;
-	
-	// settings
+
+	// other settings
 	public static boolean preventVanillaMobsSpawningInRaids;
 	public static boolean forceMobSpawningInRaids;
 	public static boolean keepInventoryInRaids;
 	public static boolean keepXPInRaids;
 	public static boolean disablePvPInRaids;
 	public static boolean keepMobsOnRaidLoss;
-	
-	
+
+	// commands
+	public static boolean useWinLossCommands;
+	public static ArrayList<String> globalWinCommands;
+	public static ArrayList<String> globalLossCommands;
+	public static ArrayList<String> perPlayerWinCommands;
+	public static ArrayList<String> perPlayerLossCommands;
+
+
 	public static void initConfigVals() {
 		//init config
 		config = RaidsPerRegion.getInstance().getConfig();
 		
-		//init variables
+		// config version
 		configVersion = config.getInt("config-version");
 		
+		// title settings
 		raidStartTitle = config.getString("RaidStartTitle");
 		raidStartSubtitle = config.getString("RaidStartSubtitle");
 		raidWinTitle = config.getString("RaidWinTitle");
@@ -78,6 +88,7 @@ public class Config {
 		raidBossTitle = config.getString("RaidBossTitle");
 		raidBossSubtitle = config.getString("RaidBossSubtitle");
 		
+		// tier settings
 		tier1MaxMobs = config.getInt("Tier1.MaxMobsAtOnce");
 		tier1KillsGoal = config.getInt("Tier1.KillsGoal");
 		tier1TimeLimit = config.getInt("Tier1.TimeLimit");
@@ -104,7 +115,8 @@ public class Config {
 		tier3MobLevel = config.getDouble("Tier3.MobLevel");
 		tier3HasBoss = config.getBoolean("Tier3.HasBoss");
 		tier3BossName = config.getString("Tier3.Boss");
-	
+		
+		// Other settings
 		preventVanillaMobsSpawningInRaids = config.getBoolean("PreventVanillaMobsSpawningInRaids");
 		forceMobSpawningInRaids = config.getBoolean("ForceMobSpawningInRaids");
 		keepInventoryInRaids = config.getBoolean("KeepInventoryInRaids");
@@ -112,8 +124,15 @@ public class Config {
 		disablePvPInRaids = config.getBoolean("DisablePvPInRaids");
 		keepMobsOnRaidLoss = config.getBoolean("KeepMobsOnRaidLoss");
 		
+		// commands
+		useWinLossCommands = config.getBoolean("UseWinLossCommands");
+		globalWinCommands = (ArrayList<String>) config.getStringList("RaidWinCommands.Global");
+		globalLossCommands = (ArrayList<String>) config.getStringList("RaidLossCommands.Global");
+		perPlayerWinCommands = (ArrayList<String>) config.getStringList("RaidWinCommands.PerPlayer");
+		perPlayerLossCommands = (ArrayList<String>) config.getStringList("RaidLossCommands.PerPlayer");
 		
-		//get raid mobs from config
+		// raid mobs
+		
 		Raids.raidMobs.clear();
 		for (String mob : config.getConfigurationSection("RaidMobs").getKeys(false)) {
 			// name, level, priority, chance

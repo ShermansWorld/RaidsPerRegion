@@ -233,6 +233,87 @@ public abstract class Raid {
 		}
 	}
 	
+	public void runWinCommands() {
+		for (String globalCmd : Config.globalWinCommands) {
+			if (globalCmd.contains("@NAME")) {
+				globalCmd = globalCmd.replaceAll("@NAME", this.name);
+			}
+			if (globalCmd.contains("@TIER")) {
+				globalCmd = globalCmd.replaceAll("@TIER", String.valueOf(this.tier));
+			}
+			if (globalCmd.contains("@OWNER")) {
+				globalCmd = globalCmd.replaceAll("@OWNER", String.valueOf(this.owner));
+			}
+			if (globalCmd.contains("@BOSS")) {
+				globalCmd = globalCmd.replaceAll("@BOSS", String.valueOf(this.bossName));
+			}
+			Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), globalCmd);
+		}
+		
+		for (String perPlayerCmd : Config.perPlayerWinCommands) {
+			if (perPlayerCmd.contains("@NAME")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@NAME", this.name);
+			}
+			if (perPlayerCmd.contains("@TIER")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@TIER", String.valueOf(this.tier));
+			}
+			if (perPlayerCmd.contains("@OWNER")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@OWNER", String.valueOf(this.owner));
+			}
+			if (perPlayerCmd.contains("@BOSS")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@BOSS", String.valueOf(this.bossName));
+			}
+			for (UUID uuid : this.participantsKillsMap.keySet()) {
+				if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
+					if (perPlayerCmd.contains("@PLAYER")) {
+						perPlayerCmd = perPlayerCmd.replaceAll("@PLAYER", String.valueOf(Bukkit.getPlayer(uuid).getName()));
+					}
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), perPlayerCmd);
+				}
+			}
+		}
+	}
+	
+	public void runLossCommands() {
+		for (String globalCmd : Config.globalLossCommands) {
+			if (globalCmd.contains("@NAME")) {
+				globalCmd = globalCmd.replaceAll("@NAME", this.name);
+			}
+			if (globalCmd.contains("@TIER")) {
+				globalCmd = globalCmd.replaceAll("@TIER", String.valueOf(this.tier));
+			}
+			if (globalCmd.contains("@OWNER")) {
+				globalCmd = globalCmd.replaceAll("@OWNER", String.valueOf(this.owner));
+			}
+			if (globalCmd.contains("@BOSS")) {
+				globalCmd = globalCmd.replaceAll("@BOSS", String.valueOf(this.bossName));
+			}
+			Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), globalCmd);
+		}
+		
+		for (String perPlayerCmd : Config.perPlayerLossCommands) {
+			if (perPlayerCmd.contains("@NAME")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@NAME", this.name);
+			}
+			if (perPlayerCmd.contains("@TIER")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@TIER", String.valueOf(this.tier));
+			}
+			if (perPlayerCmd.contains("@OWNER")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@OWNER", String.valueOf(this.owner));
+			}
+			if (perPlayerCmd.contains("@BOSS")) {
+				perPlayerCmd = perPlayerCmd.replaceAll("@BOSS", String.valueOf(this.bossName));
+			}
+			for (UUID uuid : this.participantsKillsMap.keySet()) {
+				if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
+					if (perPlayerCmd.contains("@PLAYER")) {
+						perPlayerCmd = perPlayerCmd.replaceAll("@PLAYER", String.valueOf(Bukkit.getPlayer(uuid).getName()));
+					}
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), perPlayerCmd);
+				}
+			}
+		}
+	}
 
 	// Abstract methods
 	public abstract void startRaid(CommandSender sender, boolean isConsole);

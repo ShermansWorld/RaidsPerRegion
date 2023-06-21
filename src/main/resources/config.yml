@@ -5,6 +5,7 @@ config-version: 1
 # |    RaidsPerRegion3 by ShermansWorld   |
 # =========================================
 
+# RAID MOBS
 RaidMobs:
   SkeletalMinion:
     Chance: 0.60
@@ -18,7 +19,8 @@ RaidMobs:
   SkeletalKing:
     Chance: 0.05
     Priority: 4
-    
+
+# TIER SETTINGS
 Tier1:
    MaxMobsAtOnce: 100
    KillsGoal: 100
@@ -46,8 +48,8 @@ Tier3:
    MobLevel: 1.0
    HasBoss: true
    Boss: AngrySludge
-   
-
+  
+# TITLE MESSAGES
 # @OWNER, @TIER, @NAME, @BOSS
 RaidStartTitle: "&4&lTier @TIER Raid Inbound"
 RaidStartSubtitle: "&6Prepare to fight!" 
@@ -64,9 +66,30 @@ RaidStopSubtitle: "&6Raid Cancelled by @OWNER"
 RaidBossTitle: "&c&lRaid Boss Spawned"
 RaidBossSubtitle: "&6Kill @BOSS to win the raid!"
 
+
+# RAID REWARDS/PUNISHMENTS
+# @OWNER, @TIER, @NAME, @BOSS, @PLAYER
+UseWinLossCommands: true
+
+RaidWinCommands:
+  Global:
+    - "broadcast The tier @TIER raid on @NAME has been won!"
+  PerPlayer:
+    - "eco give @PLAYER 100"
+    - "msg @PLAYER nice job!"
+
+RaidLoseCommands:
+  Global:
+    - "broadcast The tier @TIER raid on @NAME has been lost!"
+  PerPlayer:
+    - "eco take @PLAYER 50"
+
+
+# OTHER RAID SETTINGS
 PreventVanillaMobsSpawningInRaids: true
 ForceMobSpawningInRaids: true
-KeepInventoryInRaids: true
-KeepXPInRaids: true
-DisablePvPInRaids: true
+KeepInventoryInRaids: false
+KeepXPInRaids: false
+DisablePvPInRaids: false
 KeepMobsOnRaidLoss: true
+

@@ -162,7 +162,7 @@ public class TownRaid extends Raid {
 		// check for boss
 		if (super.hasBoss()) {
 			if (!super.isBossSpawned()) {
-				super.setBossSpawned(spawnBoss(0));
+				super.setBossSpawned(spawnBoss(10));
 				return;
 			}
 			if (!super.isBossKilled()) {
@@ -247,8 +247,13 @@ public class TownRaid extends Raid {
 	public boolean spawnBoss(int distanceFactor) {
 
 		// GET RANDOM PLAYER FROM ACTIVE PARTICIPANTS
+		
+		if (this.getActiveParticipants().isEmpty()) {
+			return false;
+		}
+		
 		int randIndex = (int) (Math.random() * super.getActiveParticipants().size());
-
+		
 		UUID playerUUID = super.getActiveParticipants().get(randIndex);
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerUUID);
 		Player player;
@@ -337,7 +342,6 @@ public class TownRaid extends Raid {
 			// spawn boss
 			ActiveMob boss = MythicMobsUtil.spawnMob(super.getBossName(), new Location(super.getWorld(), x, y, z));
 			if (boss == null) {
-				super.setHasBoss(false);
 				if (RaidsPerRegion.isInDebugMode) {
 					Bukkit.broadcastMessage(Helper.color("&4Spawned NULL BOSS! Skipping..."));
 				}
@@ -510,9 +514,8 @@ public class TownRaid extends Raid {
 		if (this.getMobSpawning() == false) {
 			TownyUtil.resetMobSpawning(town);
 		}
-
 	}
-
+	
 	// Getters and Setters
 	public Town getTown() {
 		return town;
