@@ -75,7 +75,7 @@ public class RegionRaid extends Raid {
 			public void run() {
 				spawnMobsForCycle(20);
 			}
-		}.runTaskTimer(RaidsPerRegion.getInstance(), 0L, (long) (20L * super.getSpawnRate())); // Runs instantly,
+		}.runTaskTimer(RaidsPerRegion.getInstance(), 0L, (long) (20F / super.getSpawnRate())); // Runs instantly,
 																								// repeats every 1 sec *
 																								// spawn rate
 

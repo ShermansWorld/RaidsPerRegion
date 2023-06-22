@@ -1,11 +1,41 @@
 # DO NOT CHANGE THIS
-config-version: 1
+config-version: 7
 
 # =========================================
 # |    RaidsPerRegion3 by ShermansWorld   |
 # =========================================
 
-# RAID MOBS
+# RaidsPerRegion is a server event plugin that allows you to conduct a raid on a predefined WorldGuard region.
+# Players within the region have to kill a set amount of your custom MythicMobs mobs before the timer runs out.
+# A raid is initiated using /raid [world] [region] [tier], it can be cancelled using /raid cancel.
+# RaidsPerRegion is also fully compatibile with Towny! Use /raidtown [world] [town] [tier]
+
+# ----- NOT WORKING CHECKLIST -----
+# 1: MythicMobs, WorldGuard and WorldEdit are dependencies. Make sure these pluings are up to date.
+# 2: Make sure no other plugin/setting is disabling mob spawning in the raid area.
+
+# ----- PERMISSION NODES -----
+# raidsperregion.admin - Allows for /raid, /raidtown and /raidsperregion reload
+
+# ----- HELP WITH DEPENDENCIES ----- 
+# How to define a WorldGuard Region: https://worldguard.enginehub.org/en/latest/regions/quick-start/
+# How to create MythicMobs Mob: https://www.mythicmobs.net/manual/doku.php/start
+# ... or look at exampleMobs.yml in your MythicMobs folder!
+
+# ----- RAID MOBS ------
+# These are the mobs (Mythic Mobs) types that spawn in a raid.
+# You may edit this section to include as many mobs as you want.
+
+# Chance: the chance of spawning in each cycle.
+# 0.60 for example would be 60%. The smallest chance can be 0.001 or 0.1%.
+
+# Priority: is the priority of the mob spawning.
+# If two mobs spawn per the chance parameter the one with the higher priority is spawned.
+# This means that rare mobs (one with a low chance value) should have a higher priority!
+
+# If no mob is spawned using its chance it defaults to the first mob in the list.
+# This should be your most common one and should not make much of a difference.
+
 RaidMobs:
   SkeletalMinion:
     Chance: 0.60
@@ -20,7 +50,20 @@ RaidMobs:
     Chance: 0.05
     Priority: 4
 
-# TIER SETTINGS
+
+# ------  RAID TIERS  -----
+# These are the settings for each tier of raid. Right now the plugin supports 3 tiers of raids.
+# At this time you cannot add additional tiers.
+# You will probably need to play around with these settings to see what works best for your mobs.
+
+# MaxMobsAtOnce: The total number of mobs that can be in the raid area at one time.
+# KillsGoal: The amount of mobs the players need to kill to win the raid.
+# Time: The time (in seconds) the players have to win the raid.
+# SpawnRate: How fast the mobs spawn (this can increase lag quickly).
+# MobLevel: The level of the mobs the spawn (usually increases damage and health).
+# HasBoss: If the raid has a boss at the end once the kills goal has been reached.
+# Boss: The name of the boss (Mythic Mob) that will spawn (if applicable).
+
 Tier1:
    MaxMobsAtOnce: 100
    KillsGoal: 100
@@ -49,8 +92,9 @@ Tier3:
    HasBoss: true
    Boss: AngrySludge
   
-# TITLE MESSAGES
-# @OWNER, @TIER, @NAME, @BOSS
+# ----- TITLE MESSAGES ------
+# Available Placeholders: @TIER @NAME @OWNER @BOSS
+
 RaidStartTitle: "&4&lTier @TIER Raid Inbound"
 RaidStartSubtitle: "&6Prepare to fight!" 
 
@@ -67,8 +111,12 @@ RaidBossTitle: "&c&lRaid Boss Spawned"
 RaidBossSubtitle: "&6Kill @BOSS to win the raid!"
 
 
-# RAID REWARDS/PUNISHMENTS
-# @OWNER, @TIER, @NAME, @BOSS, @PLAYER
+# -----RAID REWARDS/PUNISHMENTS ------
+# Use this for creating rewards/punishments for raid wins/losses.
+# Available Placeholders:
+# Global - @TIER @NAME @OWNER @BOSS
+# PerPlayer - @TIER @NAME @OWNER @BOSS @PLAYER
+
 UseWinLossCommands: true
 
 RaidWinCommands:
@@ -85,7 +133,14 @@ RaidLoseCommands:
     - "eco take @PLAYER 50"
 
 
-# OTHER RAID SETTINGS
+# ----- OTHER SETTINGS -----
+# PreventVanillaMobsSpawningInRaids: Removes vanilla mobs if they spawn in the raid area.
+# ForceMobSpawningInRaids: Will turn on mob spawning for the duration of the raid if it is off.
+# KeepInventoryInRaids: Turns on keep inventory for all players who die in the raid area.
+# KeepXPInRaids: Turns on keep exp for all players who die in the raid area.
+# DisablePvPInRaids: Disables PvP (players hitting each other) in the raid area.
+# KeepMobsOnRaidLoss: Does not remove the spawned mobs after a raid loss.
+
 PreventVanillaMobsSpawningInRaids: true
 ForceMobSpawningInRaids: true
 KeepInventoryInRaids: false
