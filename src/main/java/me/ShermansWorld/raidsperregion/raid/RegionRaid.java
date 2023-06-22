@@ -19,6 +19,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
 import me.ShermansWorld.raidsperregion.config.Config;
+import me.ShermansWorld.raidsperregion.events.RegionRaidWinEvent;
 import me.ShermansWorld.raidsperregion.util.ScoreboardUtil;
 import me.ShermansWorld.raidsperregion.util.Helper;
 import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
@@ -166,6 +167,10 @@ public class RegionRaid extends Raid {
 				return;
 			}
 		}
+		
+		// create and call RegionWinEvent
+		RegionRaidWinEvent regionWinEvent = new RegionRaidWinEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(regionWinEvent);
 
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
