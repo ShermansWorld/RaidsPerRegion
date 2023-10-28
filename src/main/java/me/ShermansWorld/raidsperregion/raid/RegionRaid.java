@@ -513,11 +513,10 @@ public class RegionRaid extends Raid {
 	public void forceMobsSpawning() {
 		// check for mob spawning flag in region
 		if (region.getFlag(Flags.MOB_SPAWNING) == null) {
-			this.setMobSpawning(false);
+			this.setMobSpawning(true);
 			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.ALLOW);
 			return;
-		}
-		if (region.getFlag(Flags.MOB_SPAWNING).equals(StateFlag.State.DENY)) {
+		} else if (region.getFlag(Flags.MOB_SPAWNING).equals(StateFlag.State.DENY)) {
 			this.setMobSpawning(false);
 			region.setFlag(Flags.MOB_SPAWNING, StateFlag.State.ALLOW);
 		} else {
