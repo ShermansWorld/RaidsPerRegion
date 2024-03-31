@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.ShermansWorld.raidsperregion"
-version = "3.0.1"
+version = "3.0.2"
 description = ""
 
 java {
@@ -45,7 +45,7 @@ dependencies {
 
     compileOnly("io.lumine:Mythic-Dist:5.2.1")
 
-    implementation("fr.mrmicky:fastboard:1.2.1")
+    implementation("fr.mrmicky:fastboard:2.1.0")
 
     compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.3.0-SNAPSHOT")
 
