@@ -19,10 +19,13 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
 import me.ShermansWorld.raidsperregion.config.Config;
+import me.ShermansWorld.raidsperregion.events.RegionRaidStartEvent;
+import me.ShermansWorld.raidsperregion.events.RegionRaidLoseEvent;
 import me.ShermansWorld.raidsperregion.events.RegionRaidWinEvent;
 import me.ShermansWorld.raidsperregion.util.ScoreboardUtil;
 import me.ShermansWorld.raidsperregion.util.Helper;
 import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
+
 
 public class RegionRaid extends Raid {
 
@@ -41,8 +44,16 @@ public class RegionRaid extends Raid {
 	@Override
 	public void startRaid(CommandSender sender, boolean isConsole) {
 
+		
 		Raids.globalRaidID++;
 		this.setID(Raids.globalRaidID);
+		RegionRaidStartEvent regionStartEvent = new RegionRaidStartEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(regionStartEvent);
+		if (regionStartEvent.isCancelled()) {
+			Raids.globalRaidID--;
+			this.setID(Raids.globalRaidID);
+			return;
+		}
 		Raids.activeRegionRaids.add(this);
 
 		// see if mob spawning is allowed in region, and force it on if necessary
@@ -216,6 +227,9 @@ public class RegionRaid extends Raid {
 
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
+		// create and call RegionWinEvent
+		RegionRaidLoseEvent regionLoseEvent = new RegionRaidLoseEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(regionLoseEvent);
 
 		// Send title message to anyone who participated
 		for (UUID playerUUID : super.getParticipantsKillsMap().keySet()) {
