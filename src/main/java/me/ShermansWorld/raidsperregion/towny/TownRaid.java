@@ -2,6 +2,7 @@ package me.ShermansWorld.raidsperregion.towny;
 
 import java.util.UUID;
 
+import com.palmergames.bukkit.towny.object.TownBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,6 +30,7 @@ import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
 
 
 public class TownRaid extends Raid {
+	private static final double RAID_MAX_RANGE = 500;
 
 	private Town town;
 	private BukkitTask updateParticipantsTimer;
@@ -140,29 +142,44 @@ public class TownRaid extends Raid {
 
 	@Override
 	public void findParticipants() {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			final Location pLocation = p.getLocation();
 
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			Location loc = player.getLocation();
-			if (TownyUtil.townContains(town, loc)) {
-				if (!super.getParticipantsKillsMap().containsKey(player.getUniqueId())) {
-					super.getParticipantsKillsMap().put(player.getUniqueId(), 0);
-					super.sendTitleToPlayer(player, Config.raidStartTitle, Config.raidStartSubtitle);
+			// Get town home-block
+			TownBlock townBlock = town.getHomeBlockOrNull();
+			if (townBlock == null)
+				continue;
+
+			// Check if player and town is in same world
+			World townWorld = townBlock.getWorld().getBukkitWorld();
+			if (pLocation.getWorld() == null || !pLocation.getWorld().equals(townWorld))
+				continue;
+
+			// Calculate player distance from center of town home-block
+			Location locLower = townBlock.getWorldCoord().getLowerMostCornerLocation();
+			Location locUpper = townBlock.getWorldCoord().getUpperMostCornerLocation();
+			final Location townCenter = locLower.toVector().getMidpoint(locUpper.toVector()).toLocation(townWorld);
+			final double distance = townCenter.distance(pLocation);
+
+            // Outside range of raid
+            if (distance < RAID_MAX_RANGE) { // In range of raid
+				if (!getParticipantsKillsMap().containsKey(p.getUniqueId())) {
+					getParticipantsKillsMap().put(p.getUniqueId(), 0);
+					sendTitleToPlayer(p, Config.raidStartTitle, Config.raidStartSubtitle);
+
 					// Show scoreboard after title goes away
-					new BukkitRunnable() {
-						public void run() {
-							// Show scoreboard after title goes away
-							createScoreboard(player);
-							updateScoreboard(player);
-						}
-					}.runTaskLater(RaidsPerRegion.getInstance(), 80);
+					Bukkit.getScheduler().runTaskLater(RaidsPerRegion.getInstance(), () -> {
+						createScoreboard(p);
+						updateScoreboard(p);
+					}, 80);
 				}
-				if (!super.getActiveParticipants().contains(player.getUniqueId())) {
-					super.getActiveParticipants().add(player.getUniqueId());
+
+				// Add player to raid if not in it already
+				if (!getActiveParticipants().contains(p.getUniqueId())) {
+					getActiveParticipants().add(p.getUniqueId());
 				}
 			} else {
-				if (super.getActiveParticipants().contains(player.getUniqueId())) {
-					super.getActiveParticipants().remove(player.getUniqueId());
-				}
+				getActiveParticipants().remove(p.getUniqueId()); // Remove from raid if in it
 			}
 		}
 	}

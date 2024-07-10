@@ -139,28 +139,27 @@ public class RegionRaid extends Raid {
 
 	@Override
 	public void findParticipants() {
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			Location loc = player.getLocation();
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			Location loc = p.getLocation();
+
 			if (region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
-				if (!super.getParticipantsKillsMap().containsKey(player.getUniqueId())) {
-					super.getParticipantsKillsMap().put(player.getUniqueId(), 0);
-					super.sendTitleToPlayer(player, Config.raidStartTitle, Config.raidStartSubtitle);
+				if (!getParticipantsKillsMap().containsKey(p.getUniqueId())) {
+					getParticipantsKillsMap().put(p.getUniqueId(), 0);
+					sendTitleToPlayer(p, Config.raidStartTitle, Config.raidStartSubtitle);
+
 					// Show scoreboard after title goes away
-					new BukkitRunnable() {
-						public void run() {
-							// Show scoreboard after title goes away
-							createScoreboard(player);
-							updateScoreboard(player);
-						}
-					}.runTaskLater(RaidsPerRegion.getInstance(), 80);
+					Bukkit.getScheduler().runTaskLater(RaidsPerRegion.getInstance(), () -> {
+						createScoreboard(p);
+						updateScoreboard(p);
+					}, 80);
 				}
-				if (!super.getActiveParticipants().contains(player.getUniqueId())) {
-					super.getActiveParticipants().add(player.getUniqueId());
+
+				// Add player to raid if not in it already
+				if (!getActiveParticipants().contains(p.getUniqueId())) {
+					getActiveParticipants().add(p.getUniqueId());
 				}
 			} else {
-				if (super.getActiveParticipants().contains(player.getUniqueId())) {
-					super.getActiveParticipants().remove(player.getUniqueId());
-				}
+                getActiveParticipants().remove(p.getUniqueId()); // Remove from raid if in it
 			}
 		}
 	}
