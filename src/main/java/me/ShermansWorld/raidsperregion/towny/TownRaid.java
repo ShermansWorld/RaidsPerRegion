@@ -18,11 +18,15 @@ import io.lumine.mythic.core.mobs.ActiveMob;
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
 import me.ShermansWorld.raidsperregion.config.Config;
 import me.ShermansWorld.raidsperregion.raid.Raid;
+import me.ShermansWorld.raidsperregion.events.TownRaidStartEvent;
+import me.ShermansWorld.raidsperregion.events.TownRaidLoseEvent;
+import me.ShermansWorld.raidsperregion.events.TownRaidWinEvent;
 import me.ShermansWorld.raidsperregion.raid.RaidMob;
 import me.ShermansWorld.raidsperregion.raid.Raids;
 import me.ShermansWorld.raidsperregion.util.ScoreboardUtil;
 import me.ShermansWorld.raidsperregion.util.Helper;
 import me.ShermansWorld.raidsperregion.util.MythicMobsUtil;
+
 
 public class TownRaid extends Raid {
 
@@ -44,6 +48,13 @@ public class TownRaid extends Raid {
 
 		Raids.globalRaidID++;
 		this.setID(Raids.globalRaidID);
+		TownRaidStartEvent townStartEvent = new TownRaidStartEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(townStartEvent);
+		if (townStartEvent.isCancelled()) {
+			Raids.globalRaidID--;
+			this.setID(Raids.globalRaidID);
+			return;
+		}
 		Raids.activeTownRaids.add(this);
 
 		// see if mob spawning is allowed in region, and force it on if necessary
@@ -158,6 +169,9 @@ public class TownRaid extends Raid {
 
 	@Override
 	public void onRaidWin() {
+		// create and call TownRaidWinEvent
+		TownRaidWinEvent townWinEvent = new TownRaidWinEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(townWinEvent);
 
 		// check for boss
 		if (super.hasBoss()) {
@@ -209,6 +223,8 @@ public class TownRaid extends Raid {
 
 		// restore region's mobspawning settings prior to raid
 		resetMobsSpawning();
+		TownRaidLoseEvent townLoseEvent = new TownRaidLoseEvent(this);
+		Bukkit.getServer().getPluginManager().callEvent(townLoseEvent);
 
 		// Send title message to anyone who participated
 		for (UUID playerUUID : super.getParticipantsKillsMap().keySet()) {
