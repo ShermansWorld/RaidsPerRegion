@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "me.ShermansWorld.raidsperregion"
-version = "3.0.3"
+version = "3.0.2"
 description = ""
 
 java {
