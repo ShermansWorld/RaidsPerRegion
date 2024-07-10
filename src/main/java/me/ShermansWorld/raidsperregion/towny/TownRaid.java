@@ -142,24 +142,25 @@ public class TownRaid extends Raid {
 
 	@Override
 	public void findParticipants() {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			final Location pLocation = p.getLocation();
+		// Get town home-block
+		TownBlock townBlock = town.getHomeBlockOrNull();
+		if (townBlock == null)
+			return;
 
-			// Get town home-block
-			TownBlock townBlock = town.getHomeBlockOrNull();
-			if (townBlock == null)
-				continue;
+		World townWorld = townBlock.getWorld().getBukkitWorld();
+		Location locLower = townBlock.getWorldCoord().getLowerMostCornerLocation();
+		Location locUpper = townBlock.getWorldCoord().getUpperMostCornerLocation();
+		Location townCenter = locLower.toVector().getMidpoint(locUpper.toVector()).toLocation(townWorld);
+
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			Location pLocation = p.getLocation();
 
 			// Check if player and town is in same world
-			World townWorld = townBlock.getWorld().getBukkitWorld();
 			if (pLocation.getWorld() == null || !pLocation.getWorld().equals(townWorld))
 				continue;
 
-			// Calculate player distance from center of town home-block
-			Location locLower = townBlock.getWorldCoord().getLowerMostCornerLocation();
-			Location locUpper = townBlock.getWorldCoord().getUpperMostCornerLocation();
-			final Location townCenter = locLower.toVector().getMidpoint(locUpper.toVector()).toLocation(townWorld);
-			final double distance = townCenter.distance(pLocation);
+			// Calculate player distance from center of town center
+			double distance = townCenter.distance(pLocation);
 
             // Outside range of raid
             if (distance < RAID_MAX_RANGE) { // In range of raid
