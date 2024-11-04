@@ -64,7 +64,7 @@ public class RaidsPerRegion extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 		saveDefaultConfig();
-		Config.initConfigVals();
+		Config.initConfigVals(null);
 		registerEvents();
 		registerCommands();
 		registerTabCompletion();
