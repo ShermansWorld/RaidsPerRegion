@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
 
     compileOnly("com.palmergames.bukkit.towny:towny:0.98.6.0")
 
@@ -83,7 +83,7 @@ tasks {
 
     runServer {
         // Configure the Minecraft version for our task.
-        minecraftVersion("1.19.3")
+        minecraftVersion("1.20.4")
     }
 }
 

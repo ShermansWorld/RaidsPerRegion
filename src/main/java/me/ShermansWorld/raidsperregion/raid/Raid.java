@@ -106,38 +106,48 @@ public abstract class Raid {
 		bossName = "NULL";
 
 		// get raid params based on the tier
-		switch (tier) {
-		case 1:
-			maxTotalMobs = Config.tier1MaxMobs;
-			killsGoal = Config.tier1KillsGoal;
-			timeLimit = Config.tier1TimeLimit;
-			mobSpawnsPerCycle = Config.tier1MobSpawnsPerCycle;
-			spawnRate = Config.tier1SpawnRate;
-			mobLevel = Config.tier1MobLevel;
-			hasBoss = Config.tier1HasBoss;
-			bossName = Config.tier1BossName;
-			break;
-		case 2:
-			maxTotalMobs = Config.tier2MaxMobs;
-			killsGoal = Config.tier2KillsGoal;
-			timeLimit = Config.tier2TimeLimit;
-			mobSpawnsPerCycle = Config.tier2MobSpawnsPerCycle;
-			spawnRate = Config.tier2SpawnRate;
-			mobLevel = Config.tier2MobLevel;
-			hasBoss = Config.tier2HasBoss;
-			bossName = Config.tier2BossName;
-			break;
-		case 3:
-			maxTotalMobs = Config.tier3MaxMobs;
-			killsGoal = Config.tier3KillsGoal;
-			timeLimit = Config.tier3TimeLimit;
-			mobSpawnsPerCycle = Config.tier3MobSpawnsPerCycle;
-			spawnRate = Config.tier3SpawnRate;
-			mobLevel = Config.tier3MobLevel;
-			hasBoss = Config.tier3HasBoss;
-			bossName = Config.tier3BossName;
-			break;
-		}
+		
+		maxTotalMobs = Config.tierMaxMobs[tier];
+		killsGoal = Config.tierKillsGoal[tier];
+		timeLimit = Config.tierTimeLimit[tier];
+		mobSpawnsPerCycle = Config.tierMobSpawnsPerCycle[tier];
+		spawnRate = Config.tierSpawnRate[tier];
+		mobLevel = Config.tierMobLevel[tier];
+		hasBoss = Config.tierHasBoss[tier];
+		bossName = Config.tierBossName[tier];
+
+//		switch (tier) {
+//		case 1:
+//			maxTotalMobs = Config.tier1MaxMobs;
+//			killsGoal = Config.tier1KillsGoal;
+//			timeLimit = Config.tier1TimeLimit;
+//			mobSpawnsPerCycle = Config.tier1MobSpawnsPerCycle;
+//			spawnRate = Config.tier1SpawnRate;
+//			mobLevel = Config.tier1MobLevel;
+//			hasBoss = Config.tier1HasBoss;
+//			bossName = Config.tier1BossName;
+//			break;
+//		case 2:
+//			maxTotalMobs = Config.tier2MaxMobs;
+//			killsGoal = Config.tier2KillsGoal;
+//			timeLimit = Config.tier2TimeLimit;
+//			mobSpawnsPerCycle = Config.tier2MobSpawnsPerCycle;
+//			spawnRate = Config.tier2SpawnRate;
+//			mobLevel = Config.tier2MobLevel;
+//			hasBoss = Config.tier2HasBoss;
+//			bossName = Config.tier2BossName;
+//			break;
+//		case 3:
+//			maxTotalMobs = Config.tier3MaxMobs;
+//			killsGoal = Config.tier3KillsGoal;
+//			timeLimit = Config.tier3TimeLimit;
+//			mobSpawnsPerCycle = Config.tier3MobSpawnsPerCycle;
+//			spawnRate = Config.tier3SpawnRate;
+//			mobLevel = Config.tier3MobLevel;
+//			hasBoss = Config.tier3HasBoss;
+//			bossName = Config.tier3BossName;
+//			break;
+//		}
 
 		timeLeft = timeLimit;
 		kills = 0;
