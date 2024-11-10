@@ -156,11 +156,9 @@ public class RegionRaid extends Raid {
 
 				// Add player to raid if not in it already
 				if (!getActiveParticipants().contains(p.getUniqueId())) {
-					// Set keep inventory
 					getActiveParticipants().add(p.getUniqueId());
 				}
 			} else {
-				// Remove keep inventory
                 getActiveParticipants().remove(p.getUniqueId()); // Remove from raid if in it
 			}
 		}

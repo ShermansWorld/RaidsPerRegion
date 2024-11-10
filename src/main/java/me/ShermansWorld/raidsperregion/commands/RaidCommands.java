@@ -14,7 +14,6 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import me.ShermansWorld.raidsperregion.RaidsPerRegion;
-import me.ShermansWorld.raidsperregion.config.Config;
 import me.ShermansWorld.raidsperregion.raid.Raid;
 import me.ShermansWorld.raidsperregion.raid.Raids;
 import me.ShermansWorld.raidsperregion.raid.RegionRaid;
@@ -89,15 +88,11 @@ public class RaidCommands implements CommandExecutor {
 				unknownCommandMsg(sender);
 				return false;
 			}
-		} else if (args.length == 4 || args.length == 5) {
+		} else if (args.length == 4) {
 			String cmdArg = args[0];
 			String worldArg = args[1];
 			String regionArg = args[2];
 			String tierArg = args[3];
-			if (args.length == 5) {
-				String configName = args[4];
-				Config.initConfigVals(configName);
-			}h
 			if (cmdArg.equalsIgnoreCase("start")) {
 				boolean validWorld = false;
 				for (World world : Bukkit.getWorlds()) {

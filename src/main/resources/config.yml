@@ -64,8 +64,6 @@ RaidMobs:
 # HasBoss: If the raid has a boss at the end once the kills goal has been reached.
 # Boss: The name of the boss (Mythic Mob) that will spawn (if applicable).
 
-RaidTierAmount: 3
-
 Tier1:
    MaxMobsAtOnce: 100
    KillsGoal: 100
